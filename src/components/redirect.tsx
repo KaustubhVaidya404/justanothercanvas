@@ -10,7 +10,7 @@ export function Redirect() {
 
   useEffect(() => {
     if (session.isSignedIn) {
-      router.push("/canvas");
+      router.push(`/canvas/${session.session?.user?.firstName}`);
     }
   }, [session]);
 

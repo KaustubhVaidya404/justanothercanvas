@@ -12,7 +12,7 @@ export function Redirect() {
     if (session.isSignedIn) {
       router.push(`/canvas/${session.session?.user?.firstName}`);
     }
-  }, [session]);
+  }, [router, session]);
 
   return null;
 }

@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-
 import React, { useCallback, useState } from "react";
 import {
   ReactFlow,
@@ -16,12 +15,13 @@ import {
   useReactFlow,
   ReactFlowInstance,
 } from "@xyflow/react";
-
+import { v4 as uuidv4 } from 'uuid';
 import "@xyflow/react/dist/style.css";
 import { Button } from "./ui/button";
 
-const getNodeId = () => `randomnode_${+new Date()}`;
-const flowKey = "canvas-flow";
+const getNodeId = () => uuidv4();
+//TODO: make sure the data id is generated from the server
+const FLOW_KEY = "canvas-flow";
 
 const initialNodes: any[] = [];
 const initialEdges: Edge[] = [];
@@ -31,17 +31,16 @@ export function CanvasComponent() {
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
   const [rfInstance, setRfInstance] = useState<ReactFlowInstance | null>(null);
   const { setViewport } = useReactFlow();
-
   const onSave = useCallback(() => {
-    if (rfInstance) {
-      const flow = rfInstance.toObject();
-      localStorage.setItem(flowKey, JSON.stringify(flow));
-    }
+    if (!rfInstance) return;
+    const flow = rfInstance.toObject();
+    console.log(flow);
+    localStorage.setItem(FLOW_KEY, JSON.stringify(flow));
   }, [rfInstance]);
 
   const onRestore = useCallback(() => {
     const restoreFlow = async () => {
-      const flow = JSON.parse(localStorage.getItem(flowKey) || '{}');
+      const flow = JSON.parse(localStorage.getItem(FLOW_KEY) || "{}");
 
       if (flow) {
         const { x = 0, y = 0, zoom = 1 } = flow.viewport || {};
@@ -70,8 +69,6 @@ export function CanvasComponent() {
     (params: any) => setEdges((eds) => addEdge(params, eds)),
     [setEdges]
   );
-
-  
 
   return (
     <div style={{ width: "90vw", height: "80vh" }}>

@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 
-"use client";
 
 import React, { useCallback, useState } from "react";
 import {
@@ -22,11 +21,9 @@ import "@xyflow/react/dist/style.css";
 import { Button } from "./ui/button";
 
 const getNodeId = () => `randomnode_${+new Date()}`;
-const flowKey = "canvas_flow";
+const flowKey = "canvas-flow";
 
-const initialNodes: any[] = [
-  { id: '1', data: { label: 'Node 1' }, position: { x: 0, y: -50 } }
-];
+const initialNodes: any[] = [];
 const initialEdges: Edge[] = [];
 
 export function CanvasComponent() {
@@ -44,7 +41,7 @@ export function CanvasComponent() {
 
   const onRestore = useCallback(() => {
     const restoreFlow = async () => {
-      const flow = JSON.parse(localStorage.getItem(flowKey) ?? "");
+      const flow = JSON.parse(localStorage.getItem(flowKey) || '{}');
 
       if (flow) {
         const { x = 0, y = 0, zoom = 1 } = flow.viewport;
@@ -55,15 +52,15 @@ export function CanvasComponent() {
     };
 
     restoreFlow();
-  }, [setNodes, setViewport]);
+  }, [setEdges, setNodes, setViewport]);
 
   const onAdd = useCallback(() => {
     const newNode = {
       id: getNodeId(),
       data: { label: "Added node" },
       position: {
-        x: (Math.random() - 0.5) * 400,
-        y: (Math.random() - 0.5) * 400,
+        x: 0,
+        y: 0,
       },
     };
     setNodes((nds) => nds.concat(newNode));
@@ -73,6 +70,8 @@ export function CanvasComponent() {
     (params: any) => setEdges((eds) => addEdge(params, eds)),
     [setEdges]
   );
+
+  
 
   return (
     <div style={{ width: "90vw", height: "80vh" }}>
@@ -85,9 +84,9 @@ export function CanvasComponent() {
       >
         <Panel position="top-right">
           <div className="flex flex-col gap-2">
-            <Button onChange={onSave}>Save</Button>
-            <Button onChange={onRestore}>Restore</Button>
-            <Button onChange={onAdd}>Add</Button>
+            <Button onClick={onSave}>Save</Button>
+            <Button onClick={onRestore}>Restore</Button>
+            <Button onClick={onAdd}>Add</Button>
           </div>
         </Panel>
       </ReactFlow>

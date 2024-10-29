@@ -70,6 +70,8 @@ export function CanvasComponent() {
     [setEdges]
   );
 
+  const proOptions = { hideAttribution: true };
+
   return (
     <div style={{ width: "90vw", height: "80vh" }}>
       <ReactFlow
@@ -78,6 +80,7 @@ export function CanvasComponent() {
         onNodesChange={onNodesChange}
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
+        proOptions={proOptions}
       >
         <Panel position="top-right">
           <div className="flex flex-col gap-2">

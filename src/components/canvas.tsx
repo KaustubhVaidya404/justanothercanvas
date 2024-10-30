@@ -15,7 +15,6 @@ import {
   useReactFlow,
   ReactFlowInstance,
 } from "@xyflow/react";
-import { v4 as uuidv4 } from 'uuid';
 import "@xyflow/react/dist/style.css";
 import { Button } from "./ui/button";
 

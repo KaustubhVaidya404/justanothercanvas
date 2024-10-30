@@ -7,9 +7,8 @@ export default function Home() {
   return (
     <div>
       <AppBar />
-      <Redirect />
-      <Redirect />
       <LandingBody />
+      <Redirect />
       <FooterComponent />
     </div>
   );

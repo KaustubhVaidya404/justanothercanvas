@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { Button } from "./ui/button";
+import { SignedOut, SignInButton } from "@clerk/nextjs";
 
 
 export default function LandingBody() {
@@ -12,7 +12,11 @@ export default function LandingBody() {
           </p>
           <div className="space-y-4 sm:space-y-6">
             <Button asChild size="lg" className="px-6 sm:px-8 py-2 sm:py-3 text-base sm:text-lg">
-              <Link href="/canvas/guest">Start Drawing</Link>
+              <SignedOut>
+                  <SignInButton>
+                    <Button>Start Drawing</Button>
+                  </SignInButton>
+                </SignedOut>
             </Button>
           </div>
         </main>

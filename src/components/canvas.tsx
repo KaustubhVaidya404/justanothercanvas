@@ -17,9 +17,13 @@ import {
 } from "@xyflow/react";
 import "@xyflow/react/dist/style.css";
 import { Button } from "./ui/button";
+import { CreateNode } from "@/utils/createnode";
 
-const getNodeId = () => uuidv4();
-//TODO: make sure the data id is generated from the server
+let id = 1;
+const getNodeId = () => `${id++}`;
+const fitViewOptions = {
+  padding: 3,
+};
 const FLOW_KEY = "canvas-flow";
 
 const initialNodes: any[] = [];
@@ -53,14 +57,11 @@ export function CanvasComponent() {
   }, [setEdges, setNodes, setViewport]);
 
   const onAdd = useCallback(() => {
-    const newNode = {
+    const newNode = CreateNode({
       id: getNodeId(),
-      data: { label: "Added node" },
-      position: {
-        x: 0,
-        y: 0,
-      },
-    };
+      data: "Node",
+      position: { x: Math.random() * 250, y: Math.random() * 250 },
+    });
     setNodes((nds) => nds.concat(newNode));
   }, [setNodes]);
 
@@ -80,6 +81,8 @@ export function CanvasComponent() {
         onEdgesChange={onEdgesChange}
         onConnect={onConnect}
         proOptions={proOptions}
+        fitView
+        fitViewOptions={fitViewOptions}
       >
         <Panel position="top-right">
           <div className="flex flex-col gap-2">

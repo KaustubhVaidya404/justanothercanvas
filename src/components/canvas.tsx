@@ -18,9 +18,9 @@ import {
 import "@xyflow/react/dist/style.css";
 import { Button } from "./ui/button";
 import { CreateNode } from "@/utils/createnode";
+import { UUIDGenerator } from "@/utils/uuigenerator";
 
-let id = 1;
-const getNodeId = () => `${id++}`;
+const uuidValue = new UUIDGenerator();
 const fitViewOptions = {
   padding: 3,
 };
@@ -58,7 +58,7 @@ export function CanvasComponent() {
 
   const onAdd = useCallback(() => {
     const newNode = CreateNode({
-      id: getNodeId(),
+      id: uuidValue.generate(),
       data: "Node",
       position: { x: Math.random() * 250, y: Math.random() * 250 },
     });
